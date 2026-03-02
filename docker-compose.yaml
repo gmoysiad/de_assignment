@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: de_postgres_db
+    environment:
+      POSTGRES_USER: de_user
+      POSTGRES_PASSWORD: de_password
+      POSTGRES_DB: de_assignment
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U de_user -d de_assignment"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  etl_app:
+    build: .
+    container_name: de_python_app
+    depends_on:
+      db:
+        condition: service_healthy # This waits for the DB to be fully ready
+    environment:
+      # Inside Docker, the host is the name of the service: 'db'
+      DATABASE_URL: postgresql://de_user:de_password@db:5432/de_assignment
