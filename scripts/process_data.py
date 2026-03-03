@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 from sqlalchemy import create_engine
+import time
 
 db_url = os.getenv('DATABASE_URL', 'postgresql://de_user:de_password@localhost:5432/de_assignment')
 engine = create_engine(db_url)
@@ -62,8 +63,9 @@ def run_pipeline():
     """
     df_frequent = pd.read_sql(frequent_members_query, engine)
     print("\n========================================================")
-    print("# 1. Find the most frequent members")
+    print("# 1. Find the most frequent members (top 10)")
     print(df_frequent)
+    time.sleep(5)
 
     # Task no.2
     most_bought_items_query = """
@@ -75,8 +77,9 @@ def run_pipeline():
     """
     df_bought_items = pd.read_sql(most_bought_items_query, engine)
     print("\n========================================================")
-    print("# 2. Find the most bought items")
+    print("# 2. Find the most bought items (top 10)")
     print(df_bought_items)
+    time.sleep(5)
 
     # Task no.3
     biggest_cart_query = """
@@ -89,12 +92,13 @@ def run_pipeline():
     """
     df_biggest_cart = pd.read_sql(biggest_cart_query, engine)
     print("\n========================================================")
-    print("# 3. Find the biggest cart in the database (= the largest number of items bought together)")
+    print("# 3. Find the biggest cart in the database (= the largest number of items bought together) (top 10)")
     print(df_biggest_cart)
+    time.sleep(5)
 
     # Task no.4
     query = """
-    select item_name
+    select distinct item_name
     from items
     where cat_level_1 = 'Meat-Seafood'
     """
@@ -102,10 +106,11 @@ def run_pipeline():
     print("\n========================================================")
     print("# 4. Find all the products under a category (e.g. `Meat-Seafood`)")
     print(df_query)
+    time.sleep(5)
 
     # Task no.5
     query = """
-    select cat_level_2, cat_level_3
+    select distinct cat_level_2
     from items
     where cat_level_1 = 'Dairy-Eggs-Cheese'
     """

@@ -1,9 +1,11 @@
+DROP TABLE IF EXISTS members;
 CREATE TABLE members (
     id SERIAL PRIMARY KEY,        
     member_id INT UNIQUE NOT NULL
 );
 CREATE INDEX idx_member_id ON members (member_id);
 
+DROP TABLE IF EXISTS items;
 CREATE TABLE items (
     id SERIAL PRIMARY KEY,
     item_name VARCHAR(255) UNIQUE NOT NULL,
@@ -13,6 +15,7 @@ CREATE TABLE items (
 );
 CREATE INDEX idx_items_name ON items(item_name);
 
+DROP TABLE IF EXISTS visits;
 CREATE TABLE visits (
     id SERIAL PRIMARY KEY,
     member_id INT NOT NULL REFERENCES members(member_id),
@@ -21,6 +24,7 @@ CREATE TABLE visits (
 );
 CREATE INDEX idx_visit_date ON visits(visit_date);
 
+DROP TABLE IF EXISTS sales;
 CREATE TABLE sales (
     id SERIAL PRIMARY KEY,
     visit_id INT REFERENCES visits(id),

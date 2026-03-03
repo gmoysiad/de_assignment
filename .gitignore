@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+.dockerignore
+
+*.db
+*.sqlite
+
+.DS_Store
+Thumbs.db
+
+.vscode/
+.idea/

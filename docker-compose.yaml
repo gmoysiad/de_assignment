@@ -23,7 +23,6 @@ services:
     container_name: de_python_app
     depends_on:
       db:
-        condition: service_healthy # This waits for the DB to be fully ready
+        condition: service_healthy
     environment:
-      # Inside Docker, the host is the name of the service: 'db'
       DATABASE_URL: postgresql://de_user:de_password@db:5432/de_assignment
