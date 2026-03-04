@@ -18,6 +18,8 @@ and then a bunch of lines will start appearing which they basically:
 - Wait for the db to be ready and start the transformation logics and fills the tables
 - Lastly, it runs and prints the tasks inside the `process_data.py` (there is a 5 second time sleep in between the 5 tasks in order to take a quick look while it runs)
 
+When it all finishes up, press `D` and then `docker-compose down` and the container will shut down.
+
 ## CSV Files and Data transformation
 Two csv files, `categories.csv` and `groceries.csv`, were provided and they were required to be deconstructed into tables with more coherent information, as shown in the following image.
 <div style="text-align:center">
