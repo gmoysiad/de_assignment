@@ -4,17 +4,19 @@ A Python ETL project that loads csv files into a PostgreSQL database using panda
 This project uses Docker in order to create an application that runs solely on Docker, meaning that, if you have Docker installed, you can simply type in a cmd window inside the directory and it will build the database and its tables, read the files, fill the tables, and run the tasks that are described in the pdf assignment.
 
 ## How to run the Dockerfile
-First, make sure you have **Docker open**, then in the directory where the Dockerfile is, open a command line window and type the following:
-<div style="text-align:center">
-docker-compose up --build
-</div>
+First, make sure you have **Docker open** and have downloaded the repository locally, then in the root directory (where the Dockerfile is), open a command line window as shown in the figure below:<br><br>
+<img src="type_cmd.png" />
+
+ and type the following command:<br><br>
+`docker-compose up --build`
 <br>
 
 and then a bunch of lines will start appearing which they basically:
 - Start the PostgreSQL database
 - Execute `init.sql` to build the tables, their keys and indexes
 - Create the Python 3.11 ETL container
-- Wait for the db to be ready and start the transformation logics and the tasks inside the `process_data.py` (there is a 5 second time sleep in between 5 tasks in order to take a quick look while it runs)
+- Wait for the db to be ready and start the transformation logics and fills the tables
+- Lastly, it runs and prints the tasks inside the `process_data.py` (there is a 5 second time sleep in between the 5 tasks in order to take a quick look while it runs)
 
 ## CSV Files and Data transformation
 Two csv files, `categories.csv` and `groceries.csv`, were provided and they were required to be deconstructed into tables with more coherent information, as shown in the following image.
@@ -38,8 +40,8 @@ Cat_level_3=All-Purpose-Cleaners
 </div>
 <br>
 
-In `members` table we took the distinct member_ids that are inside the `groceries.csv` file.
+In `members` table we took the distinct `member_ids` that are inside the `groceries.csv` file.
 
-In `visits` table we created a serial unique primary key to identify the pair of member_id with their visit_date, from the `groceries.csv` file.
+In `visits` table we used `member_id` and `visit_date` and created a serial unique primary key, `visit_id` to identify the unique pair, from the `groceries.csv` file.
 
-Finally, `sales` table is a combination of `items` and `visits`, for which we created a unique serial primary key to identify the sale of an item during a specific visit by utilizing a foreign key relationship with `visit_id`
+Finally, `sales` table is a combination of `items` and `visits`, for which we created a unique serial primary key to identify the sale of an `item_name` during a specific visit by utilizing a foreign key relationship with `visit_id` from `visits` table.
